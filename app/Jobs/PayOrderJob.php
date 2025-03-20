@@ -45,7 +45,7 @@ class PayOrderJob implements ShouldQueue
                 $payloadData = json_decode($payload, true);
                 $payloadData['data']['attempts'] = $this->attempts() + 1;
                 $payload = json_encode($payloadData);
-                Redis::lpush('laravel_database_queues:pay_order_' . ($this->user_id % 10), $payload);
+                Redis::lpush('laravel_database_queues:queue_' . ($this->user_id % 10), $payload);
 
                 $this->job->delete();
             } else {
